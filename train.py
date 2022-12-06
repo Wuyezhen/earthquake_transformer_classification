@@ -26,16 +26,16 @@ from hparams import hparams
 
 
 
-data_path1 = "./SanHe_data/earthquake_wave/1"
-data_path2 = "./SanHe_data/earthquake_wave/2"
-data_path3 = "./SanHe_data/earthquake_wave/4"
-data_path4 = "./SanHe_data/earthquake_wave/5"
-data_path5 = "./SanHe_data/explosion_wave/1"
-data_path6 = "./SanHe_data/explosion_wave/2"
-data_path7 = "./SanHe_data/explosion_wave/4"
-data_path8 = "./SanHe_data/explosion_wave/5"
-test_path1 = "./SanHe_data/earthquake_wave/3"
-test_path2 = "./SanHe_data/explosion_wave/3"
+data_path1 = "./data/earthquake_wave/1"
+data_path2 = "./data/earthquake_wave/2"
+data_path3 = "./data/earthquake_wave/4"
+data_path4 = "./data/earthquake_wave/5"
+data_path5 = "./data/explosion_wave/1"
+data_path6 = "./data/explosion_wave/2"
+data_path7 = "./data/explosion_wave/4"
+data_path8 = "./data/explosion_wave/5"
+test_path1 = "./data/earthquake_wave/3"
+test_path2 = "./data/explosion_wave/3"
 eq_list = get_file_list(data_path1)
 eq_list += get_file_list(data_path2)
 eq_list += get_file_list(data_path3)
@@ -97,18 +97,17 @@ def test_step(model, x_test, y_test):
 
 # 日志文件的写入函数
 current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-train_log_dir = 'log/shuffle_swin_trur_add_noise_true_2048_3/' + current_time + '/train'
-test_log_dir = 'log/shuffle_swin_trur_add_noise_true_2048_3/' + current_time + '/test'
+train_log_dir = 'log/shuffle_swin_3/' + current_time + '/train'
+test_log_dir = 'log/shuffle_swin_3/' + current_time + '/test'
 train_summary_writer = tf.summary.create_file_writer(train_log_dir)
 test_summary_writer = tf.summary.create_file_writer(test_log_dir)
 
 model = SwinTransformerModel()
 # model.summary()
-# keras.utils.plot_model(model, "earthquake_resnet_50.png",show_shapes=True)
 os.makedirs('log', exist_ok=True)
 # 保存模型
 step = tf.Variable(0)
-checkpoint_dir = './gx/shuffle_swin_trur__add_noise_true_2048_3'
+checkpoint_dir = './gx/shuffle_swin_3'
 os.makedirs(checkpoint_dir, exist_ok= True)
 checkpoint = tf.train.Checkpoint(optimizer = optimizer, model = model, step=step)
 ckpt_manager = tf.train.CheckpointManager(checkpoint, checkpoint_dir, max_to_keep=5)
